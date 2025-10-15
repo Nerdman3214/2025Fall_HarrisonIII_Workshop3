@@ -3,24 +3,43 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
-//One of the properties of the shopping cart
-//should be the products in the shopping cart
-//What data structure would make sense here?
 public class ShoppingCart {
-    //Be sure to instantiate the list before using it
-    public List<Product> cart = new ArrayList<>();
+    private List<Product> cart = new ArrayList<>();
 
-    //These methods are just placeholders, fill them in
-    //With real logic
-    public void addToCart(Product product){
-
+    public void addToCart(Product product) {
+        cart.add(product);
     }
 
-    public void removeFromCart(Product product){
-
+    public void removeFromCartBySku(String sku) {
+        cart.removeIf(p -> p.getSku().equalsIgnoreCase(sku));
     }
 
-    public double getCartTotal(){
-        return 0;
+    public double getCartTotal() {
+        double total = 0.0;
+        for (Product p : cart) {
+            total += p.getPrice();
+        }
+        return total;
+    }
+
+    public List<Product> getCartItems() {
+        return cart;
+    }
+
+    public void clearCart() {
+        cart.clear();
+    }
+
+    public void printCartContents() {
+        if (cart.isEmpty()) {
+            System.out.println("Cart is empty.");
+            return;
+        }
+
+        System.out.println("=== Your Cart ===");
+        for (Product p : cart) {
+            System.out.println(p);
+        }
+        System.out.printf("Total: $%.2f%n", getCartTotal());
     }
 }
